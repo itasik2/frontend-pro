@@ -1,0 +1,609 @@
+/* fonts */
+@font-face {
+  font-family: "Open-sans";
+  src: local("OpenSansRegular"), local("OpenSans-Regular"),
+    url("../fonts/OpenSans-Regular.woff") format("woff");
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Open-sans";
+  src: local("OpenSansSemiBold"), local("OpenSans-SemiBold"),
+    url("../fonts/OpenSans-SemiBold.woff") format("woff");
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Open-sans";
+  src: local("OpenSansBold"), local("OpenSans-Bold"),
+    url("../fonts/OpenSans-Bold.woff") format("woff");
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+}
+
+/* Var */
+:root {
+  --white: #fff;
+  --green: #34c759;
+  --orange: #e6b127;
+  --red: #f06a4d;
+  --firm: #9873ff;
+  --transparent-grey: rgba(200, 197, 209, 0.302);
+  --ligth-grey: #e5e5e5;
+  --grey: #c8c5d1;
+  --txt-grey: #b0b0b0;
+  --black: #333;
+}
+
+body {
+  font-family: "Open-sans", sans-serif;
+  box-sizing: border-box;
+  background-color: var(--grey);
+  position: relative;
+}
+
+:active,
+:hover,
+:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--black);
+}
+
+.light-text {
+  font-family: var(--font-family);
+  font-size: 12px;
+  color: var(--txt-grey);
+}
+
+/* Modal */
+/* Модальное окно по умолчанию скрыто (прозрачное и невидимое) */
+.hidde {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50px); /* Смещено вверх */
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Когда модальное окно активно (отображается) */
+.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0); /* Возвращается на место */
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-container {
+  top: 0;
+  left: 0;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  width: 100%;
+  min-height: 100%;
+  background-color: rgba(51, 51, 51, 0.6);
+  z-index: 99999;
+}
+
+.modal-wrap {
+  width: 450px;
+  box-shadow: 0 0 35px 0 rgba(0, 0, 0, 0.15);
+  background: var(--white);
+  z-index: 99999;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.modal-header-container {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.close-btn {
+  border: none;
+  background-color: var(--white);
+  right: 10px;
+  top: 10px;
+}
+
+.modal-title {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.modal-form {
+  padding: 30px;
+}
+
+.form-item {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+.form-input {
+  border: none;
+  border-bottom: 1px solid var(--grey);
+  width: 100%;
+  height: 40px;
+  padding: 5px 0;
+  margin-bottom: 10px;
+}
+
+.input-error {
+  border-bottom: 1px solid var(--red);
+}
+
+.form-label {
+  position: absolute;
+  pointer-events: none;
+  left: 0px;
+  right: 15px;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 40px;
+  transition: 0.3s;
+  color: var(--txt-grey);
+}
+
+.form-input:focus ~ .form-label,
+.form-input:not(:focus):valid ~ .form-label,
+.form-input:focus:invalid ~ .form-label {
+  top: -15px;
+  font-size: 10px;
+}
+
+.contacts {
+  background-color: var(--transparent-grey);
+  padding: 10px 30px;
+}
+
+.contacts-container {
+  padding-top: 30px;
+}
+
+.contact-input {
+  border: 1px solid var(--grey);
+  border-radius: 0;
+  margin-bottom: 20px;
+}
+
+.delete-input-btn {
+  border: none;
+  background-color: #e7e5eb;
+  margin-left: auto;
+}
+
+.delete-input-btn > svg {
+  fill: var(--txt-grey);
+}
+
+.contact-value {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.contact-type > option {
+  background-color: var(--white);
+  border: 0;
+  border-radius: 0;
+  color: var(--black);
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.contact-type {
+  width: 123px;
+  height: 37px;
+  border: none;
+  color: var(--black);
+  font-size: 12px;
+  appearance: none; /* Для большинства браузеров */
+  -webkit-appearance: none; /* Для Safari и Chrome */
+  -moz-appearance: none;
+  padding-left: 10px;
+  background-color: #e7e5eb;
+}
+
+.select-wrapper::after {
+  content: url(../img/select-arrow-down.svg); /* Иконка стрелки вниз */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Чтобы стрелка не мешала клику по селекту */
+  transition: transform 0.3s ease; /* Плавный переход */
+}
+
+.select-wrapper:active::after {
+  transform: translateY(-50%) rotate(180deg); /* Поворот стрелки на 180 градусов при раскрытии */
+}
+
+.errors-container {
+  font-size: 10px;
+  color: var(--red);
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-contact-btn {
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  &:active,
+  &:hover,
+  &:focus-visible {
+    color: var(--firm);
+  }
+}
+
+/* Delete modal */
+.modal-confirm-delete-desc {
+  margin: auto;
+  text-align: center;
+}
+
+.delete-title {
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  box-shadow: 0px 9.03012px 27.0904px rgba(176, 190, 197, 0.32),
+    0px 3.38629px 5.64383px rgba(176, 190, 197, 0.32);
+  background-color: var(--white);
+}
+
+.header-container {
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 15px;
+  padding-bottom: 23px;
+  max-width: 1024px;
+  align-items: center;
+}
+
+.logo {
+  margin-right: 55px;
+}
+
+.form-search__input {
+  max-height: 44px;
+  min-width: 581px;
+  border: 1px solid rgba(51, 51, 51, 0.2);
+  background-color: inherit;
+}
+
+/* Container */
+.container {
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: var(--ligth-grey);
+  max-width: 1024px;
+}
+
+.h1-title {
+  margin: 0;
+  margin-bottom: 5px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--black);
+}
+
+/* Table */
+.table > :not(caption) > * > * {
+  padding: 5px 5px;
+}
+
+th {
+  padding-right: 20px;
+  border: none;
+}
+
+th.sorted {
+  color: var(--firm);
+  /* Цвет для активной колонки */
+}
+
+.sort-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-size: contain;
+}
+
+.sort-order {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.sort-icon.asc {
+  background-image: url("../img/arrow-up.svg");
+}
+
+.sort-icon.desc {
+  background-image: url("../img/arrow-dawn.svg");
+}
+
+.th-title {
+  cursor: pointer;
+  &:hover {
+    color: var(--firm);
+    transition: color 0.3s ease;
+  }
+}
+
+tr {
+  height: 20px;
+}
+
+.table-body {
+  height: 300px;
+  background-color: var(--white);
+}
+
+td {
+  align-content: center;
+}
+
+.client-fio {
+  max-width: 250px;
+}
+
+.editBtn,
+.deleteBtn {
+  position: relative;
+  border: none;
+  background-color: var(--white);
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.editBtn:hover {
+  color: var(--firm);
+  transition: color 0.3s ease;
+}
+
+.activeEditBtn {
+  color: var(--firm);
+}
+
+.deleteBtn:hover {
+  color: var(--red);
+  transition: color 0.3s ease;
+}
+
+.activeDeleteBtn {
+  color: var(--red);
+}
+
+.add-btn {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  color: var(--firm);
+  border: 1px solid var(--firm);
+  border-radius: 0px;
+  padding: 12px 26px;
+}
+
+.cancel-btn,
+.delete-client-btn,
+.confirm-cancel-btn {
+  border: none;
+  background-color: var(--white);
+  font-size: 12px;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}
+
+.visible-contacts {
+  padding-bottom: 2px;
+}
+
+.hidden-contacts-btn {
+  display: flex;
+  background-color: var(--white);
+  border: 2px solid var(--firm);
+  border-radius: 50%;
+  color: var(--black);
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.hidden-contacts-btn:active {
+  background-color: #b89eff;
+}
+
+.modal-btn {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  font-size: 14px;
+  padding: 12px 37px;
+  max-width: max-content;
+  background-color: var(--firm);
+  color: var(--white);
+  border: none;
+}
+
+.contacts-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.contact-icon {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  fill: var(--firm);
+  opacity: 0.7;
+  margin-right: 3px;
+    &:hover,
+    &:active {
+      opacity: 1;
+      transition: opacity .3s ease;
+    }
+
+}
+
+.tippy-box {
+  background-color: var(--black);
+  border-radius: 0;
+}
+
+.tooltip-content {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  color: #fff;
+}
+
+.tooltip-content a {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #b89eff;
+}
+
+#preloader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  background: transparent;
+}
+
+.loader {
+  background-image: url(../img/spiner.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -60px;
+  margin-top: -60px;
+}
+
+.spin-edit-img {
+  width: 14px;
+  height: 14px;
+  animation: spin 2s linear infinite;
+}
+
+.spin-delete-img {
+  width: 14px;
+  height: 14px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Медиазапрос для экранов меньше 768px */
+@media (max-width: 768px) {
+  .header-container {
+    justify-content: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .logo {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+  }
+
+  .form-search__input {
+    display: none;
+  }
+
+  .h1-title {
+    font-size: 18px;
+  }
+
+  .table-wrap {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table {
+    width: 755px;
+  }
+
+  .modal-wrap {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    max-width: 300px;
+  }
+
+  .modal-header-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .close-btn {
+    right: 5px;
+    top: 5px;
+  }
+
+  .modal-form {
+    padding: 15px;
+  }
+
+  .contacts {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .contacts-container {
+    padding-top: 15px;
+  }
+
+  .contact-type {
+    width: 110px;
+    font-size: 12px;
+  }
+
+  .contact-value {
+    width: 143px;
+  }
+}
